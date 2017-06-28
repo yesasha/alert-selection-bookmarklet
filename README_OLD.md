@@ -3,12 +3,14 @@ Simple project that shows how to get selected text and how to create a bookmarkl
 These two things are very basic, but also important.
 
 ## Bookmarklets
-[Bookmarklet](https://en.wikipedia.org/wiki/Bookmarklet) is a javascript stored as a bookmark in browser. While normal links start with "http:" protocol, bookmarklets start with "javascript:". It is a very interesting mechanism that allows you to run your javascript code on any page. Most desktop browsers support extensions, which are much more powerfull, but mobile browsers laks it in general. Bookmarklets allow you to extend the functionality of almost all browsers (desktop and mobile). "javascript:" protocol is not defined in web standarts.
+[Bookmarklet](https://en.wikipedia.org/wiki/Bookmarklet) is a javascript stored as a bookmark in browser. While normal links start with `http:` protocol, bookmarklets start with `javascript:`. It is a very interesting mechanism that allows you to run your javascript code on any page. Most desktop browsers support extensions, which are much more powerfull, but mobile browsers laks it in general. Bookmarklets allow you to extend the functionality of almost all browsers (desktop and mobile). `javascript:` protocol is not defined in web standarts.
 
 
 ### So how do you make it?
 
-To make a bookmarklet you must create a link starting with "javascript:" protocol, followed by javascript code. Something like `javascript:alert("Hello!")`. A bookmarklet should not return anything. If it returns, the browser will replace the current page with the result equivalent to `document.write(lastReturnedValue)`. To prevent this you may put `void(0)` to the end of your code or wrap all your code in `void("your code")`. But there is another and better way. Since 'javascript:' protocol evaluates in global scope you will not want to put variables there, so wrap your code in anonymous function, or better say immediately-invoked function expression: `javascript:(function(){var m='Hello!';alert(m)})()`. Sometimes, immediately-invoked function expressions are written like this: `!function(){}()`. This is not good for bookmarklets, since it will return "true". Now your code evaluates in its own scope and since you are not explicitly returning any value it will return `undefined`.
+To make a bookmarklet you must create a link starting with "javascript:" protocol, followed by javascript code. Something like `javascript:alert("Hello!")`. A bookmarklet should not return anything. If it returns, the browser will replace the current page with the result equivalent to `document.write(lastReturnedValue)`. To prevent this you may put `void(0)` to the end of your code or wrap all your code in `void(your code)`. But there is another and better way. Since 'javascript:' protocol evaluates in global scope you will not want to put variables there, so wrap your code in anonymous function, or better say immediately-invoked function expression: `javascript:(function(){var m='Hello!';alert(m)})()`. Sometimes, immediately-invoked function expressions are written like this: `!function(){}()`. This is not good for bookmarklets, since it will return "true". Now your code evaluates in its own scope and since you are not explicitly returning any value it will return `undefined`.
+
+<del>You can (or you can tell to the user of your page to) go to browser's bookmarks manager and create it manually.</del> Create a link like this `<a href="javascript:alert("Hello!")"></a>` and ask user to drag it to bookmarks panel.
 
 
 <s>So you may want to wrap the last statement in a void(), to prevent this. or if you have a variables you may wrap your code in anonymous function or better say immediately-invoked function expression `javascript:(function(){var message = "Hello!";alert(message)})()` since 'javascript:' protocol evaluates in global scope. A bookmarklet must not return anything. If it returns, the browser will replace the current page with the result. So you may want to wrap the last statement in a void(), to prevent this. Sometimes, immediately-invoked function expression is written like this: `!function(){}()`. This is not good for bookmarklets, since it will return "true".</s>
@@ -25,14 +27,9 @@ The second is 6 characters less.
 
 javascript:(function(){var message = "Hello!";alert(message)})()</s>
 
-Use one "character" names (this will probably be done by minifiers).
+Use "one character" names and remove linebreaks and unneaded spaces (this will probably be done by minifiers).
 
-Provide an arguments to anonymous function instead of creating local arguments explicitly.
 
-`javascript:(function(){var m='Hello!';alert(m)})()`
-vs
-`javascript:(function(m){alert(m)})('Hello!')`
-6 characters less
 
 
 
@@ -56,12 +53,26 @@ vs
 3 characters less
 
 
-This one will give better results if you'll use `document` more times.
+The more times you'll use `document` in your script the bigger will be difference.
 Also, this is an example of how to load an external script if you can't fit your code.
-
 
 #### text/javascript
 Do you need to set a type? As you are targeting any page written by others, it may be non html5, so you need to set a type. Moreover, if you are loading an external script, you are no more limited to the size.
+
+
+
+
+Provide an arguments to anonymous function instead of creating local arguments explicitly.
+
+`javascript:(function(){var m='Hello!';alert(m)})()`
+vs
+`javascript:(function(m){alert(m)})('Hello!')`
+6 characters less
+
+
+
+
+
 
 
 
@@ -79,7 +90,9 @@ When browser sees the "javascript:" protocol, it understands, that there is a ja
 
 2. Put your string of code into "href" attribute of an <a>. For this you need to replace/escape characters that are forbidden for html/attribute. This is a "quote" character. 
 
+Actually, this is a quote symbol. If you are using double quotes in html, then you can use single quotes in javascript and vice versa.  You may encode quotes inside javascript with `&quot;`, then, when bookmarked it will be replaced by the browser with quotes. And if user decides to put his bookmarklet back to the link, he will need to encode quotes again. If you encode quotes with percent encoding `%22` for `"` and `%27` for `'`, it will be left intact, and bookmarklet will be "cross usable". But another problem pops up. Now it's not a valid javascript code. So opening it in your javascript editor may become a problem.
 
+The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes.
 
 
 
