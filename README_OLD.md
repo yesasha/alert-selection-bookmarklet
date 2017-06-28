@@ -82,16 +82,16 @@ Actually there are 2 problems.
 
 
 
-2. Put your string of code into "href" attribute of an <a>. For this you need to replace/escape characters that are forbidden for html/attribute. This is a quote symbol. If you are using double quotes in html, then you can use single quotes in javascript and vice versa.  You may encode quotes inside javascript with `&quot;`, then, when bookmarked it will be replaced by the browser with quotes. And if user decides to put his bookmarklet back to the link, he will need to encode quotes again. If you encode quotes with percent encoding `%22` for `"` and `%27` for `'`, it will be left intact, and bookmarklet will be "cross usable". But another problem pops up. Now it's not a valid javascript code. So opening it in your javascript editor may become a problem.  The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes. `%26` is better choice, because it seems, that accepting `&` symbol only as is in `href` attribute, may become a standart behaviour.
+2. Put your string of code into "href" attribute of an <a>. For this you need to replace/escape characters that are forbidden for html/attribute. This is a quote symbol. If you are using double quotes in html, then you can use single quotes in javascript and vice versa.  You may encode quotes inside javascript with `&quot;`, then, when bookmarked it will be replaced by the browser with quotes. And if user decides to put his bookmarklet back to the link, he will need to encode quotes again. If you encode quotes with percent encoding `%22` for `"` and `%27` for `'`, it will be left intact, and bookmarklet will be "cross usable". But another problem pops up. Now it's not a valid javascript code. So opening it in your javascript editor may become a problem. The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes. `%26` is better choice, because it seems, that accepting `&` symbol only as is in `href` attribute, may become a standart behaviour.
 
 
 
 
 
 
-https://stackoverflow.com/questions/33896431/what-is-the-proper-way-to-url-encode-javascript-in-a-bookmarklet
+<s>https://stackoverflow.com/questions/33896431/what-is-the-proper-way-to-url-encode-javascript-in-a-bookmarklet
 
-As I've uderstood from there is that you can urlencode entire code, but if you only replace those 3 characters (new lines, # and %) everything will still work.
+As I've uderstood from there is that you can urlencode entire code, but if you only replace those 3 characters (new lines, # and %) everything will still work.</s>
 
 
 
@@ -117,3 +117,5 @@ TODO:
 * Side script
 * Urlencode?
 * Should set `script.type = 'text/javascript';`?
+* Click problem. document.execCommand(‘cut’/‘copy’) was denied because it was not called from inside a short running user-generated event handler.
+
