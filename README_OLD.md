@@ -49,9 +49,13 @@ javascript:void((function () {
 })())
 ```
 
-`var h=document.getElementsByTagName('head')[0],s=document.createElement('script');`
+```
+var h=document.getElementsByTagName('head')[0],s=document.createElement('script');
+```
 vs
-`var d=document,h=d.getElementsByTagName('head')[0],s=d.createElement('script');`
+```
+var d=document,h=d.getElementsByTagName('head')[0],s=d.createElement('script');
+```
 3 characters less
 
 
@@ -106,6 +110,12 @@ As I've uderstood from there is that you can urlencode entire code, but if you o
 ## Selection
 The second thing is [selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection_API). You want your bookmarklet to do something usefull with something that user points to. One way for the user to point on specific part in document is to select it. There is an example in an above link.
 
+https://stackoverflow.com/questions/5379120/get-the-highlighted-selected-text
+
+
+
+
+
 
 
 
@@ -117,5 +127,9 @@ TODO:
 * Side script
 * Urlencode?
 * Should set `script.type = 'text/javascript';`?
-* Click problem. document.execCommand(‘cut’/‘copy’) was denied because it was not called from inside a short running user-generated event handler.
+* Click problem. document.execCommand(‘cut’/‘copy’) was denied because it was not called from inside a short running user-generated event handler. Javascript protocol link is not evaluated inside short running user-generated event handler in firefox.
+* Get selection from textarea
+* Frame problem
+* Minifiers does not minify
+
 
