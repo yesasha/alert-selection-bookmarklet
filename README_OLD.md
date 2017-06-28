@@ -17,7 +17,7 @@ To make a bookmarklet you must create a link starting with "javascript:" protoco
 
 ### Tricks to minification
 
-The bookmarklet's length is limited to an url length.
+The bookmarklet's length is limited to an url length. In some browsers it may be very small, less than 500 characters.
 
 <s>If you are shure, you script doesn't return a value, you may omit a void()
 `javascript:void((function(){var message = 'Hello!';alert(message)})())`
@@ -27,12 +27,14 @@ The second is 6 characters less.
 
 javascript:(function(){var message = "Hello!";alert(message)})()</s>
 
-Use "one character" names and remove linebreaks and unneaded spaces (this will probably be done by minifiers).
+#### Minifier
+Use "one character" names and remove linebreaks and unneeded spaces (this will probably be done by minifiers).
 
 
+#### New lines
+Your final code must not contain new lines. If you want to know how to treat them anyway, other than avoid, for example while debugging, you may test it yourself.
 
-
-
+#### Aliaces and functions
 Make aliaces and functions if you have a repeated code.
 
 ```javascript
@@ -61,8 +63,8 @@ Do you need to set a type? As you are targeting any page written by others, it m
 
 
 
-
-Provide an arguments to anonymous function instead of creating local arguments explicitly.
+#### Variables
+Provide an arguments to anonymous function instead of creating local variables explicitly.
 
 `javascript:(function(){var m='Hello!';alert(m)})()`
 vs
@@ -73,29 +75,16 @@ vs
 
 
 
-
-
-
-
-
-
-
 ### Urlencode and escape
 Actually there are 2 problems.
 
-1. Put your string of code into addressbar. For this you need to replace/escape characters that are forbidden for url.
-When browser sees the "javascript:" protocol, it understands, that there is a javascript code. So you no longer need to escape all those url specific symbols like "?", "&", "#". All you need to encode is "%" symbol. Replace it with %25 or put a space after it, so browser will not recognize it as persent encoding. <del>This is not 100% shure, it depends on browser and there is no defined standard about javascript protocol.</del>
+1. Put your string of code into addressbar. For this you need to replace/escape characters that are forbidden for url. When browser sees the "javascript:" protocol, it understands, that there is a javascript code. So you no longer need to escape all those url specific symbols like "?", "&", "#". All you need to encode is "%" symbol. Replace it with %25 or put a space after it, so browser will not recognize it as persent encoding. <del>This is not 100% shure, it depends on browser and there is no defined standard about javascript protocol.</del>
 
 
 
-2. Put your string of code into "href" attribute of an <a>. For this you need to replace/escape characters that are forbidden for html/attribute. This is a "quote" character. 
+2. Put your string of code into "href" attribute of an <a>. For this you need to replace/escape characters that are forbidden for html/attribute. This is a quote symbol. If you are using double quotes in html, then you can use single quotes in javascript and vice versa.  You may encode quotes inside javascript with `&quot;`, then, when bookmarked it will be replaced by the browser with quotes. And if user decides to put his bookmarklet back to the link, he will need to encode quotes again. If you encode quotes with percent encoding `%22` for `"` and `%27` for `'`, it will be left intact, and bookmarklet will be "cross usable". But another problem pops up. Now it's not a valid javascript code. So opening it in your javascript editor may become a problem.  The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes. `%26` is better choice, because it seems, that accepting `&` symbol only as is in `href` attribute, may become a standart behaviour.
 
-Actually, this is a quote symbol. If you are using double quotes in html, then you can use single quotes in javascript and vice versa.  You may encode quotes inside javascript with `&quot;`, then, when bookmarked it will be replaced by the browser with quotes. And if user decides to put his bookmarklet back to the link, he will need to encode quotes again. If you encode quotes with percent encoding `%22` for `"` and `%27` for `'`, it will be left intact, and bookmarklet will be "cross usable". But another problem pops up. Now it's not a valid javascript code. So opening it in your javascript editor may become a problem.
 
-The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes. `%26` is better choice, because it seems, that accepting `&` symbol only as is in `href` attribute, may become a standart behaviour.
-
-### New lines
-Your final code must not contain new lines. If you want to know how to treat them anyway, other than avoid, for example while debugging, you may test it yourself.
 
 
 
