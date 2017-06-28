@@ -3,33 +3,38 @@ Simple project that shows how to get selected text and how to create a bookmarkl
 These two things are very basic, but also important.
 
 ## Bookmarklets
-[Bookmarklets](https://en.wikipedia.org/wiki/Bookmarklet) are a very interesting mechanism that allows you to run your javascript code on any page. Most desktop browsers support extensions, which are much more powerfull, but mobile browsers laks it in general. Bookmarklets allow you to extend the functionality of almost all browsers (desktop and mobile).
+[Bookmarklet](https://en.wikipedia.org/wiki/Bookmarklet) is a javascript stored as a bookmark in browser. While normal links start with "http:" protocol, bookmarklets start with "javascript:". It is a very interesting mechanism that allows you to run your javascript code on any page. Most desktop browsers support extensions, which are much more powerfull, but mobile browsers laks it in general. Bookmarklets allow you to extend the functionality of almost all browsers (desktop and mobile). "javascript:" protocol is not defined in web standarts.
+
 
 ### So how do you make it?
 
-To make a bookmarklet you must create a link starting with "javascript:" protocol, follow by javascript code. Something like `javascript:alert("Hello!")` or if you have a variables you may wrap your code in anonymous function `javascript:(function(){var message = "Hello!";alert(message)})()` since 'javascript:' protocol evaluates in global scope. A bookmarklet must not return anything. If it returns the browser will replace the current page with the result. So you may want to wrap the last statement in a void(), to prevent this.
+To make a bookmarklet you must create a link starting with "javascript:" protocol, followed by javascript code. Something like `javascript:alert("Hello!")`. A bookmarklet should not return anything. If it returns, the browser will replace the current page with the result equivalent to `document.write(lastReturnedValue)`. To prevent this you may put `void(0)` to the end of your code or wrap all your code in `void("your code")`. But there is another and better way. Since 'javascript:' protocol evaluates in global scope you will not want to put variables there, so wrap your code in anonymous function, or better say immediately-invoked function expression: `javascript:(function(){var m='Hello!';alert(m)})()`. Sometimes, immediately-invoked function expressions are written like this: `!function(){}()`. This is not good for bookmarklets, since it will return "true". Now your code evaluates in its own scope and since you are not explicitly returning any value it will return `undefined`.
 
-### Trics to minification
 
-The bookmarklet length is limited to an url length.
+<s>So you may want to wrap the last statement in a void(), to prevent this. or if you have a variables you may wrap your code in anonymous function or better say immediately-invoked function expression `javascript:(function(){var message = "Hello!";alert(message)})()` since 'javascript:' protocol evaluates in global scope. A bookmarklet must not return anything. If it returns, the browser will replace the current page with the result. So you may want to wrap the last statement in a void(), to prevent this. Sometimes, immediately-invoked function expression is written like this: `!function(){}()`. This is not good for bookmarklets, since it will return "true".</s>
 
-If you are shure, you script doesn't return a value, you may omit a void()
+### Tricks to minification
+
+The bookmarklet's length is limited to an url length.
+
+<s>If you are shure, you script doesn't return a value, you may omit a void()
 `javascript:void((function(){var message = 'Hello!';alert(message)})())`
 vs
 `javascript:(function(){var message = "Hello!";alert(message)})()`
 The second is 6 characters less.
 
-javascript:(function(){var message = "Hello!";alert(message)})()
+javascript:(function(){var message = "Hello!";alert(message)})()</s>
+
+Use one "character" names (this will probably be done by minifiers).
 
 Provide an arguments to anonymous function instead of creating local arguments explicitly.
 
-`javascript:void((function(){var m='Hello!';alert(m)})())`
+`javascript:(function(){var m='Hello!';alert(m)})()`
 vs
 `javascript:(function(m){alert(m)})('Hello!')`
-12 characters less
+6 characters less
 
-`javascript:!function(m){alert(m)}('Hello!')`
-Minus one
+
 
 Make aliaces and functions if you have a repeated code.
 
@@ -37,9 +42,10 @@ Make aliaces and functions if you have a repeated code.
 javascript:void((function () {
     var d = document,
         h = d.getElementsByTagName('h')[0],
-        s = d.createElement('s');
+        s = d.createElement('script');
 
     s.src = 'source_file.js';
+    s.type = 'text/javascript';
     h.appendChild(s);
 })())
 ```
@@ -54,10 +60,44 @@ This one will give better results if you'll use `document` more times.
 Also, this is an example of how to load an external script if you can't fit your code.
 
 
-### Urlencode
+#### text/javascript
+Do you need to set a type? As you are targeting any page written by others, it may be non html5, so you need to set a type. Moreover, if you are loading an external script, you are no more limited to the size.
+
+
+
+
+
+
+
+### Urlencode and escape
+Actually there are 2 problems.
+
+1. Put your string of code into addressbar. For this you need to replace/escape characters that are forbidden for url.
+When browser sees the "javascript:" protocol, it understands, that there is a javascript code. So you no longer need to escape all those url specific symbols like "?", "&", "#". All you need to encode is "%" symbol. Replace it with %25 or put a space after it, so browser will not recognize it as persent encoding. <del>This is not 100% shure, it depends on browser and there is no defined standard about javascript protocol.</del>
+
+
+
+2. Put your string of code into "href" attribute of an <a>. For this you need to replace/escape characters that are forbidden for html/attribute. This is a "quote" character. 
+
+
+
+
+
+
+
+
 https://stackoverflow.com/questions/33896431/what-is-the-proper-way-to-url-encode-javascript-in-a-bookmarklet
 
 As I've uderstood from there is that you can urlencode entire code, but if you only replace those 3 characters (new lines, # and %) everything will still work.
+
+
+
+
+
+
+
+
+
 
 
 ## Selection
@@ -70,6 +110,7 @@ TODO:
 * Eval is not scoped. See https://stackoverflow.com/questions/9781285/specify-scope-for-eval-in-javascript
 * onclick is scoped
 * Is global? Yes, `javascript:` is in global scope
-* Length and trics
+* Length and tricks
 * Side script
 * Urlencode?
+* Should set `script.type = 'text/javascript';`?
