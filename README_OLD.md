@@ -92,9 +92,10 @@ When browser sees the "javascript:" protocol, it understands, that there is a ja
 
 Actually, this is a quote symbol. If you are using double quotes in html, then you can use single quotes in javascript and vice versa.  You may encode quotes inside javascript with `&quot;`, then, when bookmarked it will be replaced by the browser with quotes. And if user decides to put his bookmarklet back to the link, he will need to encode quotes again. If you encode quotes with percent encoding `%22` for `"` and `%27` for `'`, it will be left intact, and bookmarklet will be "cross usable". But another problem pops up. Now it's not a valid javascript code. So opening it in your javascript editor may become a problem.
 
-The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes.
+The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes. `%26` is better choice, because it seems, that accepting `&` symbol only as is in `href` attribute, may become a standart behaviour.
 
-
+### New lines
+Your final code must not contain new lines. If you want to know how to treat them anyway, other than avoid, for example while debugging, you may test it yourself.
 
 
 
