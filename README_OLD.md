@@ -129,8 +129,8 @@ TODO:
 * Should set `script.type = 'text/javascript';`?
 * Click problem. document.execCommand(‘cut’/‘copy’) was denied because it was not called from inside a short running user-generated event handler. Javascript protocol link is not evaluated inside short running user-generated event handler in firefox.
 * Get selection from textarea
-* Frame problem
+* Frame problem. Put javascript to iframe
 * Minifiers does not minify
 * Avoid returns, use state.
 * Can run bookmarklet inside iframe?
-
+* Referrer, opener not always pass
