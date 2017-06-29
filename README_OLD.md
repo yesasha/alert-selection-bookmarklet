@@ -132,5 +132,5 @@ TODO:
 * Frame problem
 * Minifiers does not minify
 * Avoid returns, use state.
-
+* Can run bookmarklet inside iframe?
 
