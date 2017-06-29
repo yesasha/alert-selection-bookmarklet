@@ -131,5 +131,6 @@ TODO:
 * Get selection from textarea
 * Frame problem
 * Minifiers does not minify
+* Avoid returns, use state.
 
 
