@@ -60,6 +60,7 @@ var d=document,h=d.getElementsByTagName('head')[0],s=d.createElement('script');
 
 
 The more times you'll use `document` in your script the bigger will be difference.
+But if the initial name is short, then it will have inverse effect, and you will get a bigger code. Same with functions. The `function` string is long anough, so creating a function will lead to a bigger code. So you have to compare both versions.
 Also, this is an example of how to load an external script if you can't fit your code.
 
 #### text/javascript
@@ -86,7 +87,7 @@ Actually there are 2 problems.
 
 
 
-2. Put your string of code into "href" attribute of an <a>. For this you need to replace/escape characters that are forbidden for html/attribute. This is a quote symbol. If you are using double quotes in html, then you can use single quotes in javascript and vice versa.  You may encode quotes inside javascript with `&quot;`, then, when bookmarked it will be replaced by the browser with quotes. And if user decides to put his bookmarklet back to the link, he will need to encode quotes again. If you encode quotes with percent encoding `%22` for `"` and `%27` for `'`, it will be left intact, and bookmarklet will be "cross usable". But another problem pops up. Now it's not a valid javascript code. So opening it in your javascript editor may become a problem. The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes. `%26` is better choice, because it seems, that accepting `&` symbol only as is in `href` attribute, may become a standart behaviour.
+2. Put your string of code into "href" attribute of an \<a\> tag. For this you need to replace/escape characters that are forbidden for html/attribute. This is a quote symbol. If you are using double quotes in html, then you can use single quotes in javascript and vice versa.  You may encode quotes inside javascript with `&quot;`, then, when bookmarked it will be replaced by the browser with quotes. And if user decides to put his bookmarklet back to the link, he will need to encode quotes again. If you encode quotes with percent encoding `%22` for `"` and `%27` for `'`, it will be left intact, and bookmarklet will be "cross usable". But another problem pops up. Now it's not a valid javascript code. So opening it in your javascript editor may become a problem. The same thing with an `&` sign, since it is used to escape html entities. Most browsers will understand it as is, but who knows? You may encode it with `&amp;` or with `%26` as you did it with quotes. `%26` is better choice, because it seems, that accepting `&` symbol only as is in `href` attribute, may become a standart behaviour.
 
 
 
@@ -134,3 +135,4 @@ TODO:
 * Avoid returns, use state.
 * Can run bookmarklet inside iframe?
 * Referrer, opener not always pass
+* How to put it to toolbar in ie?
