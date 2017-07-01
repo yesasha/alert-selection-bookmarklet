@@ -136,3 +136,4 @@ TODO:
 * Can run bookmarklet inside iframe?
 * Referrer, opener not always pass
 * How to put it to toolbar in ie?
+* https to http block
