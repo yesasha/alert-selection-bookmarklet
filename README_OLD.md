@@ -137,3 +137,5 @@ TODO:
 * Referrer, opener not always pass
 * How to put it to toolbar in ie?
 * https to http block
+* Check if there is an instance running, or there is an effect applied.
+* Why it is good to use alerts and prompt?
