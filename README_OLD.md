@@ -139,3 +139,4 @@ TODO:
 * https to http block
 * Check if there is an instance running, or there is an effect applied.
 * Why it is good to use alerts and prompt?
+* Don't use html5 tags and html5 at all if you want it to be crossusable
